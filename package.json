@@ -1,0 +1,32 @@
+{
+  "name": "js-media-query",
+  "version": "0.0.1",
+  "description": "detet css mmedia queries with javascript",
+  "main": "js-media-queries.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomd/js-media-query.git"
+  },
+  "keywords": [
+    "media-query",
+    "css"
+  ],
+  "author": "Thomas Duerr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomd/js-media-query/issues"
+  },
+  "homepage": "https://github.com/thomd/js-media-query",
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "jsdom": "^1.0.0-pre.5",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3"
+  }
+}
