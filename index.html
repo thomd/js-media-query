@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>js-media-query demo</title>
+  <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+  <h1>js-media-query demo</h1>
+  <script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+  <script type="text/javascript" src="mediaquery.js"></script>
+  <script type="text/javascript">
+    $(document).onMediaMatch('xs', function(){
+      console.log('match xs');
+    }).onMediaMatch('md', function(){
+      console.log('match md');
+    });
+  </script>
+</body>
+</html>

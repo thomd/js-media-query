@@ -36,16 +36,25 @@ module.exports = function(grunt){
       }
     },
 
+    jshint: {
+      files: ['mediaquery.js']
+    },
+
     watch: {
       sass: {
-        files: 'main.sass',
+        files: '**/*.sass',
         tasks: ['sass:dev']
+      },
+      jshint: {
+        files: 'mediaquery.js',
+        tasks: ['jshint']
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.registerTask('default', ['sass:dev', 'watch']);
 }
