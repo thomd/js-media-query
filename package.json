@@ -1,0 +1,21 @@
+{
+  "name": "js-media-query",
+  "version": "0.0.1",
+  "description": "detect css-defined media-queries with javascript",
+  "keywords": [
+    "javascript",
+    "media-query",
+    "css"
+  ],
+  "author": "Thomas Duerr <thomduerr@gmail.com> (http://git.io/thomd)",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "jquery": "^2.1.1",
+    "jsdom": "^1.0.0-pre.6",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3"
+  }
+}

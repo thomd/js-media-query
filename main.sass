@@ -1,0 +1,10 @@
+@import 'breakpoints'
+
+$screen-sm: 690px
+
+body
+  background: lighten(green, 30%)
+
+  @media screen and (min-width: $screen-sm)
+    @include breakpoint('sm')
+    background: lighten(red, 30%)
