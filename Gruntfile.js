@@ -37,7 +37,15 @@ module.exports = function(grunt){
     },
 
     jshint: {
-      files: ['mediaquery.js']
+      files: ['mediaquery.js'],
+      options: {
+        reporter: require('jshint-stylish'),
+        globals: {
+          jQuery: true,
+          console: true,
+          module: true
+        }
+      }
     },
 
     watch: {
@@ -55,6 +63,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('jshint-stylish');
 
   grunt.registerTask('default', ['sass:dev', 'watch']);
 }
