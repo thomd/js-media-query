@@ -36,7 +36,7 @@
         }
       };
 
-      if($.fn.onMediaMatch.hasGetComputedStyleSupport) {
+      if($.onMediaMatch.hasGetComputedStyleSupport) {
 
         checkForMatch();
         var debounceResize = debounce(checkForMatch, 50);
@@ -48,7 +48,7 @@
 
   };
 
-  $.fn.onMediaMatch.hasGetComputedStyleSupport = (function(){
+  $.onMediaMatch.hasGetComputedStyleSupport = (function(){
     if (window.getComputedStyle) {
       var content = window.getComputedStyle(document.documentElement, ':after').getPropertyValue('content');
       if (content.replace(/\"/g, "") === 'test-getComputedStyle') return true;
