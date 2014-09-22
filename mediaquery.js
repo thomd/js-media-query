@@ -21,12 +21,10 @@
         var timer = null;
         return function() {
           var context = this, args = arguments;
-          return function() {
-            clearTimeout(timer);
-            timer = setTimeout(function(){
-              fn.apply(context, args);
-            }, delay);
-          };
+          clearTimeout(timer);
+          timer = setTimeout(function(){
+            fn.apply(context, args);
+          }, delay);
         };
       };
 
