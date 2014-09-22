@@ -1,4 +1,4 @@
-;(function(window, document, $, undefined){
+;(function(window, document, $){
   "use strict";
 
   $.fn.onMediaMatch = function(breakpoint, eventHandler){
@@ -12,34 +12,38 @@
       var value, matched = false;
       var el = (this.nodeType === 9) ? this.body : this;
 
-      var debounce = function (func, wait) {
-        var timeout, result;
+      // Return a function that will be called after being idle for `delay` milliseconds.
+      // This prevents from slow down page performance due to a possible long running callback `fn`.
+      //
+      // TODO move to $.fn.onMediaMatch.debounce
+      //
+      var debounce = function(fn, delay) {
+        var timer = null;
         return function() {
-
           var context = this, args = arguments;
-          var later = function() {
-            timeout = null;
-            result = func.apply(context, args);
+          return function() {
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+              fn.apply(context, args);
+            }, delay);
           };
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-          return result;
         };
       };
 
       var checkForMatch = function(){
         value = window.getComputedStyle(el, ':after').getPropertyValue('content');
         matched = value.replace(/\"/g, "") === breakpoint;
-        //console.log(breakpoint, value);
+        console.log(value);
         if(matched) {
-          eventHandler.call(this);
+          eventHandler.call(el);
         }
       };
 
-      if($.onMediaMatch.hasGetComputedStyleSupport) {
+      if($.fn.onMediaMatch.hasGetComputedStyleSupport) {
 
         checkForMatch();
-        var debounceResize = debounce(checkForMatch, 50);
+        //var debounceResize = debounce(checkForMatch, 50);
+        var debounceResize = checkForMatch;
         $(window).on('resize', debounceResize);
         $(window).on('orientationchange', debounceResize);
 
@@ -48,7 +52,7 @@
 
   };
 
-  $.onMediaMatch.hasGetComputedStyleSupport = (function(){
+  $.fn.onMediaMatch.hasGetComputedStyleSupport = (function(){
     if (window.getComputedStyle) {
       var content = window.getComputedStyle(document.documentElement, ':after').getPropertyValue('content');
       if (content.replace(/\"/g, "") === 'test-getComputedStyle') return true;

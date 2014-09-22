@@ -63,7 +63,6 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('jshint-stylish');
 
   grunt.registerTask('default', ['sass:dev', 'watch']);
 }
