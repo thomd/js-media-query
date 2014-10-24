@@ -1,63 +1,59 @@
+// consume CSS media-queries for elements without the need of defining them again (DRY)
+//
+// USAGE EXAMPLE
+//
+//	(1) include 'my-marker-name' breakpoint-marker in <module|component>.sass if you need to access this media-query in clientside javascript:
+//
+//		  #header
+//			 @media screen and (min-width: $screen-sm-min)
+//				@include js-breakpoint('my-marker-name')
+//              ...
+//
+//	(2) add 'sm' onMediaMatch event listener in <module|component>.js using jquery's chaining-syntax. provide a maching event-handler and
+//      an optional non-maching event-handler:
+//
+//		  $('#header').onMediaMatch('my-marker-name', machingEventHandler, nonMachingEventHandler);
+//
 ;(function(window, document, $){
-  "use strict";
+  'use strict';
 
-  $.fn.onMediaMatch = function(breakpoint, eventHandler){
+  $.fn.onMediaMatch = function(breakpoint, machingEventHandler, nonMachingEventHandler) {
 
-    if(typeof breakpoint !== 'string' || typeof eventHandler !== 'function') {
+    if (typeof breakpoint !== 'string' || typeof machingEventHandler !== 'function' || typeof nonMachingEventHandler !== 'function') {
       $.error('wrong arguments for onMediaMatch');
     }
 
-    return this.each(function(){
+    var nonMachingEventHandler = nonMachingEventHandler || function(){}
 
-      var value, matched = false;
-      var el = (this.nodeType === 9) ? this.body : this;
+    return this.each(function() {
 
-      // Return a function that will be called after being idle for `delay` milliseconds.
-      // This prevents from slow down page performance due to a possible long running callback `fn`.
-      //
-      // TODO move to $.fn.onMediaMatch.debounce
-      //
-      var debounce = function(fn, delay) {
+      var elem = (this.nodeType === 9) ? this.body : this;
+
+      var checkForMatch = function() {
+        if (window.getComputedStyle(elem, ':after').getPropertyValue('content').replace(/\"/g, '') === breakpoint) {
+          machingEventHandler.call(elem);
+      } else {
+        nonMachingEventHandler.call(elem);
+      }
+      };
+
+      checkForMatch();
+
+      // use debounce pattern to improve performance (callback will be called when returned function is idle for `delay` ms)
+      var debounceCheckForMatch = function(callback, delay) {
         var timer = null;
         return function() {
           var context = this, args = arguments;
-          return function() {
-            clearTimeout(timer);
-            timer = setTimeout(function(){
-              fn.apply(context, args);
-            }, delay);
-          };
+          clearTimeout(timer);
+          timer = setTimeout(function() {
+            callback.apply(context, args);
+          }, delay);
         };
-      };
+      }(checkForMatch, 50);
 
-      var checkForMatch = function(){
-        value = window.getComputedStyle(el, ':after').getPropertyValue('content');
-        matched = value.replace(/\"/g, "") === breakpoint;
-        console.log(value);
-        if(matched) {
-          eventHandler.call(el);
-        }
-      };
-
-      if($.fn.onMediaMatch.hasGetComputedStyleSupport) {
-
-        checkForMatch();
-        //var debounceResize = debounce(checkForMatch, 50);
-        var debounceResize = checkForMatch;
-        $(window).on('resize', debounceResize);
-        $(window).on('orientationchange', debounceResize);
-
-      }
+      $(window).on('resize', debounceCheckForMatch);
+      $(window).on('orientationchange', debounceCheckForMatch);
     });
 
   };
-
-  $.fn.onMediaMatch.hasGetComputedStyleSupport = (function(){
-    if (window.getComputedStyle) {
-      var content = window.getComputedStyle(document.documentElement, ':after').getPropertyValue('content');
-      if (content.replace(/\"/g, "") === 'test-getComputedStyle') return true;
-    }
-    return false;
-  })();
-
 })(window, document, jQuery);

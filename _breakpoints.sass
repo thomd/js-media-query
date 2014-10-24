@@ -1,16 +1,6 @@
-html:after
-  content: 'test-getComputedStyle'
-  position: absolute
-  visibility: hidden
-  clip: rect(0 0 0 0)
-
-@mixin breakpoint($name)
+@mixin js-breakpoint($name)
   &:after
     content: $name
     position: absolute
     visibility: hidden
     clip: rect(0 0 0 0)
-
-  // add fallback style using breakpoint name
-  //.js-breakpoints-#{$name}
-    //position: absolute

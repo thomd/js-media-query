@@ -1,0 +1,8 @@
+@import '../breakpoints'
+
+#test-context
+  background: #0f0
+
+  @media screen and (min-width: 1024px)
+    @include js-breakpoint('large')
+    background: #f00
