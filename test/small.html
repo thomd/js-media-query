@@ -8,13 +8,16 @@
   <body>
     <div id="mocha"></div>
     <div id="test-context">Small Viewport (400 x 500)</div>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
     <script>
       mocha.ui('bdd');
       mocha.reporter('html');
       var expect = chai.expect;
     </script>
+    <script src="../mediaquery.js"></script>
     <script src="small.js"></script>
     <script>
       if (window.mochaPhantomJS) {

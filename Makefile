@@ -1,10 +1,14 @@
 all: test
 
 test/main.css: test/main.sass
-	sass -t expanded --sourcemap=none $< $@
+	@sass -t expanded --sourcemap=none $< $@
 
-test: test/main.css
-	./node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 1200x500 test/large.html
-	#@./node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 400x500 test/small.html
+large-viewport:
+	@./node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 1200x500 test/large.html
 
-.PHONY: all test
+small-viewport:
+	@./node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 400x500 test/small.html
+
+test: test/main.css large-viewport small-viewport
+
+.PHONY: all test large-viewport small-viewport

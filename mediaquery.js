@@ -12,18 +12,18 @@
 //	(2) add 'sm' onMediaMatch event listener in <module|component>.js using jquery's chaining-syntax. provide a maching event-handler and
 //      an optional non-maching event-handler:
 //
-//		  $('#header').onMediaMatch('my-marker-name', machingEventHandler, nonMachingEventHandler);
+//		  $('#header').onMediaMatch('my-marker-name', matchingEventHandler, nonMatchingEventHandler);
 //
 ;(function(window, document, $){
   'use strict';
 
-  $.fn.onMediaMatch = function(breakpoint, machingEventHandler, nonMachingEventHandler) {
+  $.fn.onMediaMatch = function(breakpoint, matchingEventHandler, nonMatchingEventHandler) {
 
-    if (typeof breakpoint !== 'string' || typeof machingEventHandler !== 'function' || typeof nonMachingEventHandler !== 'function') {
+    if (typeof breakpoint !== 'string' || typeof matchingEventHandler !== 'function' || (nonMatchingEventHandler !== undefined && typeof nonMatchingEventHandler !== 'function')) {
       $.error('wrong arguments for onMediaMatch');
     }
 
-    var nonMachingEventHandler = nonMachingEventHandler || function(){}
+    var nonMatchingEventHandler = nonMatchingEventHandler || function(){}
 
     return this.each(function() {
 
@@ -31,10 +31,10 @@
 
       var checkForMatch = function() {
         if (window.getComputedStyle(elem, ':after').getPropertyValue('content').replace(/\"/g, '') === breakpoint) {
-          machingEventHandler.call(elem);
-      } else {
-        nonMachingEventHandler.call(elem);
-      }
+          matchingEventHandler.call(elem);
+        } else {
+          nonMatchingEventHandler.call(elem);
+        }
       };
 
       checkForMatch();
