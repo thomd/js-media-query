@@ -2,17 +2,17 @@
 //
 // USAGE EXAMPLE
 //
-//	(1) include 'my-marker-name' breakpoint-marker in <module|component>.sass if you need to access this media-query in clientside javascript:
+//	(1) include a 'marker-name' breakpoint-marker in your sass if you need to access this media-query in clientside javascript:
 //
-//		  #header
-//			 @media screen and (min-width: $screen-sm-min)
-//				@include js-breakpoint('my-marker-name')
+//      #header
+//          @media screen and (min-width: 768px)
+//              @include js-breakpoint('marker-name')
 //              ...
 //
-//	(2) add 'sm' onMediaMatch event listener in <module|component>.js using jquery's chaining-syntax. provide a maching event-handler and
-//      an optional non-maching event-handler:
+//	(2) add 'myrker-name' onMediaMatch event listener in your javascript using jquery's chaining-syntax.
+//	    provide a maching event-handler and an optional non-maching event-handler like this:
 //
-//		  $('#header').onMediaMatch('my-marker-name', matchingEventHandler, nonMatchingEventHandler);
+//		  $('#header').onMediaMatch('marker-name', matchingEventHandler, nonMatchingEventHandler);
 //
 ;(function(window, document, $){
   'use strict';
@@ -23,8 +23,6 @@
       $.error('wrong arguments for onMediaMatch');
     }
 
-    var nonMatchingEventHandler = nonMatchingEventHandler || function(){}
-
     return this.each(function() {
 
       var elem = (this.nodeType === 9) ? this.body : this;
@@ -33,7 +31,7 @@
         if (window.getComputedStyle(elem, ':after').getPropertyValue('content').replace(/\"/g, '') === breakpoint) {
           matchingEventHandler.call(elem);
         } else {
-          nonMatchingEventHandler.call(elem);
+          (nonMatchingEventHandler || $.noop).call(elem);
         }
       };
 
