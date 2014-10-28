@@ -1,29 +1,20 @@
 "use strict";
 
 module.exports = function(grunt){
+
+  require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
-    tag: {
-      banner: '/*!\n' +
-              ' * <%= pkg.name %>\n' +
-              ' * <%= pkg.title %>\n' +
-              ' * <%= pkg.url %>\n' +
-              ' * @author <%= pkg.author %>\n' +
-              ' * @version <%= pkg.version %>\n' +
-              ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
-              ' */\n'
-    },
 
     sass: {
       dev: {
         options: {
           style: 'expanded',
-          sourcemap: 'none',
-          banner: '<%= tag.banner %>'
+          sourcemap: 'none'
         },
         files: {
-          'main.css': 'main.sass'
+          'test/main.css': 'test/main.sass'
         }
       },
       dist: {
@@ -31,7 +22,7 @@ module.exports = function(grunt){
           style: 'compressed'
         },
         files: {
-          'main.css': 'main.sass'
+          'test/main.css': 'test/main.sass'
         }
       }
     },
@@ -48,6 +39,15 @@ module.exports = function(grunt){
       }
     },
 
+    shell: {
+      test_large_viewport: {
+        command: './node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 1200x500 test/large.html'
+      },
+      test_small_viewport: {
+        command: './node_modules/mocha-phantomjs/bin/mocha-phantomjs -v 400x500 test/small.html'
+      }
+    },
+
     watch: {
       sass: {
         files: '**/*.sass',
@@ -56,13 +56,14 @@ module.exports = function(grunt){
       jshint: {
         files: 'mediaquery.js',
         tasks: ['jshint']
+      },
+      shell: {
+        files: 'mediaquery.js',
+        tasks: ['shell:test_large_viewport', 'shell:test_small_viewport']
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-
   grunt.registerTask('default', ['sass:dev', 'watch']);
+  grunt.registerTask('test', ['shell:test_large_viewport', 'shell:test_small_viewport']);
 }

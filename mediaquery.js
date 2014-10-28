@@ -4,16 +4,17 @@
 //
 //	(1) include a 'marker-name' breakpoint-marker in your sass if you need to access this media-query in clientside javascript:
 //
+//      @import 'breakpoint'
 //      #header
 //          @media screen and (min-width: 768px)
 //              @include js-breakpoint('marker-name')
 //              ...
 //
-//	(2) add 'myrker-name' onMediaMatch event listener in your javascript using jquery's chaining-syntax.
-//	    provide a maching event-handler and an optional non-maching event-handler like this:
+//	(2) add 'marker-name' onMediaMatch event listener in your javascript using jquery's chaining-syntax.
+//	    provide a matching event-handler and an optional non-matching event-handler like this:
 //
 //		  $('#header').onMediaMatch('marker-name', matchingEventHandler, nonMatchingEventHandler);
-//
+
 ;(function(window, document, $){
   'use strict';
 
