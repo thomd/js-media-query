@@ -1,5 +1,3 @@
-// consume CSS media-queries for elements without the need of defining them again (DRY)
-//
 // USAGE EXAMPLE
 //
 //	(1) include a 'marker-name' breakpoint-marker in your sass if you need to access this media-query in clientside javascript:

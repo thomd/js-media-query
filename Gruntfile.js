@@ -61,9 +61,25 @@ module.exports = function(grunt){
         files: 'mediaquery.js',
         tasks: ['shell:test_large_viewport', 'shell:test_small_viewport']
       }
+    },
+
+    uglify: {
+      dist: {
+        files: {
+          'dist/mediaquery.min.js': ['src/mediaquery.js']
+        }
+      }
+    },
+
+    'http-server': {
+      'demo': {
+        root: 'demo',
+        port: 8888
+      }
     }
   });
 
   grunt.registerTask('default', ['sass:dev', 'watch']);
   grunt.registerTask('test', ['shell:test_large_viewport', 'shell:test_small_viewport']);
+  grunt.registerTask('demo', ['sass:dist', 'uglify:dist', 'http-server:demo']);
 }
