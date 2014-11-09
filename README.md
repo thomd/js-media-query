@@ -15,7 +15,7 @@ Add `onMediaMatch` event listener for a `marker-name` breakpoint using jquery's 
       $('#header').onMediaMatch('marker-name', matchingEventHandler, nonMatchingEventHandler);
     </script>
 
-Import `breakpoint.sass` in your sass file and define a `marker-name` breakpoint marker:
+Import `breakpoint.sass` in your SASS file and define a `marker-name` breakpoint marker:
 
     @import 'breakpoint'
     #header

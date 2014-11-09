@@ -28,9 +28,9 @@
 
       var checkForMatch = function() {
         if (window.getComputedStyle(elem, ':after').getPropertyValue('content').replace(/\"/g, '') === breakpoint) {
-          matchingEventHandler.call(elem);
+          matchingEventHandler.call(elem, breakpoint);
         } else {
-          (nonMatchingEventHandler || $.noop).call(elem);
+          (nonMatchingEventHandler || $.noop).call(elem, breakpoint);
         }
       };
 

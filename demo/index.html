@@ -4,18 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>js-media-query demo</title>
-  <link rel="stylesheet" href="main.css" type="text/css">
+  <link rel="stylesheet" href="demo.css" type="text/css">
 </head>
 <body>
   <h1>js-media-query demo</h1>
+  <div id="out"></div>
   <script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
-  <script type="text/javascript" src="mediaquery.js"></script>
+  <script type="text/javascript" src="mediaquery.min.js"></script>
   <script type="text/javascript">
-    $(document).onMediaMatch('xs', function(){
-      console.log('match xs');
-    }).onMediaMatch('md', function(){
-      console.log('match md');
-    });
+    function showWindowWidth(breakpoint) {
+      $(this).html(breakpoint + ', width: ' + $(window).width() + ' px');
+    }
+    function hideWindowWidth() {
+      $(this).html('');
+    }
+
+    $('#out').onMediaMatch('medium', showWindowWidth, hideWindowWidth);
   </script>
 </body>
 </html>

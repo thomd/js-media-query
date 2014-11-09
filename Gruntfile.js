@@ -17,12 +17,13 @@ module.exports = function(grunt){
           'test/main.css': 'test/main.sass'
         }
       },
-      dist: {
+      demo: {
         options: {
-          style: 'compressed'
+          style: 'expanded',
+          sourcemap: 'none'
         },
         files: {
-          'test/main.css': 'test/main.sass'
+          'demo/demo.css': 'demo/demo.sass'
         }
       }
     },
@@ -51,14 +52,14 @@ module.exports = function(grunt){
     watch: {
       sass: {
         files: '**/*.sass',
-        tasks: ['sass:dev']
+        tasks: ['sass:dev', 'sass:demo']
       },
       jshint: {
-        files: 'mediaquery.js',
+        files: 'src/mediaquery.js',
         tasks: ['jshint']
       },
       shell: {
-        files: 'mediaquery.js',
+        files: 'src/mediaquery.js',
         tasks: ['shell:test_large_viewport', 'shell:test_small_viewport']
       }
     },
@@ -67,6 +68,11 @@ module.exports = function(grunt){
       dist: {
         files: {
           'dist/mediaquery.min.js': ['src/mediaquery.js']
+        }
+      },
+      demo: {
+        files: {
+          'demo/mediaquery.min.js': ['src/mediaquery.js']
         }
       }
     },
@@ -79,7 +85,9 @@ module.exports = function(grunt){
     }
   });
 
-  grunt.registerTask('default', ['sass:dev', 'watch']);
-  grunt.registerTask('test', ['shell:test_large_viewport', 'shell:test_small_viewport']);
-  grunt.registerTask('demo', ['sass:dist', 'uglify:dist', 'http-server:demo']);
+  //grunt.registerTask('default', 'watch SASS, Jshint and test', ['watch:sass', 'watch:jshint', 'watch:shell']);
+  grunt.registerTask('default', 'watch SASS, Jshint and test', ['watch']);
+  grunt.registerTask('test', 'test mediaquery.js using a headless browser', ['shell:test_large_viewport', 'shell:test_small_viewport']);
+  grunt.registerTask('demo', 'run a local webserver', ['sass:demo', 'uglify:demo', 'http-server:demo']);
+  grunt.registerTask('dist', 'minimize JS', ['uglify:dist']);
 }

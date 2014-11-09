@@ -1,0 +1,23 @@
+@import ../src/breakpoint.sass
+
+html
+  font: 1em/1 "Helvetica Neue", Arial, sans-serif
+  background: #444
+  text-transform: uppercase
+  text-align: center
+
+h1
+  color: lighten(green, 40%)
+  @media screen and (min-width: 660px)
+    color: lighten(red, 40%)
+    font-size: 3em
+  @media screen and (min-width: 1080px)
+    color: lighten(blue, 40%)
+    font-size: 5em
+  @media screen and (min-width: 1500px)
+    color: lighten(yellow, 40%)
+    font-size: 7em
+
+#out
+  @include js-breakpoint('medium')
+  color: #fff
